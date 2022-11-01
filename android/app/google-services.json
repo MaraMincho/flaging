@@ -29,6 +29,13 @@
             {
               "client_id": "407522503085-qfoapuav9o586bcv8m503dr2bi5na743.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "407522503085-i8g5h1qijdgi3jrav07159d11nokamck.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.seemaster.flaging"
+              }
             }
           ]
         }
