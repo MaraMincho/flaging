@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "407522503085",
+    "project_id": "flagingdatabase",
+    "storage_bucket": "flagingdatabase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407522503085:android:487ccef3b41ccc0c90d924",
+        "android_client_info": {
+          "package_name": "com.seemaster.flaging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "407522503085-qfoapuav9o586bcv8m503dr2bi5na743.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0QNbpwlMbgw2ncpUrbfA29-tVuv0YQHU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "407522503085-qfoapuav9o586bcv8m503dr2bi5na743.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
