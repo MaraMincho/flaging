@@ -1,5 +1,9 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flaging/appvalue.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 
 
@@ -38,9 +42,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.all(30),
                 child: Column(
                   children: [
-                    SocialLoginButton(buttonType: SocialLoginButtonType.google, onPressed: (){}),
+                    SocialLoginButton(buttonType: SocialLoginButtonType.google, onPressed: () {
+                    }),
                     SizedBox(height: 10,),
-                    SocialLoginButton(buttonType: SocialLoginButtonType.github, onPressed: (){}),
+                    SocialLoginButton(buttonType: SocialLoginButtonType.github, onPressed: (){
+                      signInWithGoogle();
+                      FirebaseAuth auth = FirebaseAuth.instance;
+                      if (auth.currentUser != null) {
+                        print("체크가 널이 아닐 경우");
+                        print(auth.currentUser!.uid);
+                      }
+                    }),
                     SizedBox(height: 50,),
                     Container(
                       height: 300,
@@ -56,4 +68,16 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+Future<UserCredential> signInWithGoogle() async {
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  print(1);
+  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+  print(2);
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+  print(3);
+  return await FirebaseAuth.instance.signInWithCredential(credential);
 }
