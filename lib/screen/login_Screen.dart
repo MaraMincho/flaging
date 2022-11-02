@@ -15,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,21 +44,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     SocialLoginButton(buttonType: SocialLoginButtonType.google, onPressed: () {
+                      if (auth != null) {
+                        print("로그인 했습니당.");
+                        print(auth.currentUser);
+                      }
+                      else{
+                        print("로그인 안했습니당.");
+                      }
                     }),
                     SizedBox(height: 10,),
                     SocialLoginButton(buttonType: SocialLoginButtonType.github, onPressed: (){
                       signInWithGoogle();
-                      FirebaseAuth auth = FirebaseAuth.instance;
-                      if (auth.currentUser != null) {
-                        print("체크가 널이 아닐 경우");
-                        print(auth.currentUser!.uid);
-                      }
                     }),
                     SizedBox(height: 50,),
                     Container(
                       height: 300,
                         width: 250,
-                        child: Image.asset('images/imgs/trashCan.png',))
+                        child: GestureDetector(child: Image.asset('images/imgs/trashCan.png',),
+                        onTap: (){
+                          print(auth);
+                          auth.signOut();
+                          print(auth);
+                        },))
                   ],
                 ),
               ),
