@@ -15,7 +15,7 @@ class _MainScreenState extends State<MainScreen> {
 
       ),
       body: Column(
-        
+        Text('너 진짜 뭐하냐 -_-)
       ),
     );
   }
