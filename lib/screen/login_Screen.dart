@@ -1,7 +1,7 @@
-import 'dart:math';
-
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flaging/appvalue.dart';
+import 'package:flaging/route_generator.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
@@ -53,6 +53,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     }),
                     SizedBox(height: 10,),
+                    GestureDetector(
+                      child: Image.asset('images/icons/kakaotalk_login.png',
+                      ),
+                    ),
+                    SizedBox(height: 10,),
                     SocialLoginButton(buttonType: SocialLoginButtonType.github, onPressed: (){
                       signInWithGoogle();
                     }),
@@ -62,9 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 250,
                         child: GestureDetector(child: Image.asset('images/imgs/trashCan.png',),
                         onTap: (){
-                          print(auth);
-                          auth.signOut();
-                          print(auth);
+                          AutoRouter.of(context).push(MainScreen());
                         },))
                   ],
                 ),
@@ -79,13 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 Future<UserCredential> signInWithGoogle() async {
   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  print(1);
   final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-  print(2);
   final credential = GoogleAuthProvider.credential(
     accessToken: googleAuth?.accessToken,
     idToken: googleAuth?.idToken,
   );
-  print(3);
   return await FirebaseAuth.instance.signInWithCredential(credential);
 }
