@@ -61,8 +61,7 @@
     			<string>com.googleusercontent.apps.407522503085-i8g5h1qijdgi3jrav07159d11nokamck</string>
     		</array>
     	</dict>
-    </array
-    <!-- End of the Google Sign-in Section -->
+    </array>
 
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>The app needs location permission</string>
