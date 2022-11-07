@@ -19,7 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Column(
             children: [
-              SizedBox(height: 180,),
+              SizedBox(height: 170,),
+              SizedBox(height: 10,),
               Text('Move Eco and Echo',
               style: TextStyle(
                 fontWeight: FontWeight.w700,
