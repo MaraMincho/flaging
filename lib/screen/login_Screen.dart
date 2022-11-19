@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flaging/appvalue.dart';
 import 'package:flaging/screen/main_Screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,24 +23,29 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 180,),
-              Text('Move Eco and Echo',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 40,
-                letterSpacing: -6.5,
-                shadows: [myShadow]
-              ),),
-              Text('Flagging',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 70,
-                letterSpacing: -3,
-                shadows: [myShadow],
-              ),),
+              SizedBox(height: 100,),
+              Flexible(
+                child: Text('Move Eco and Echo',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 40,
+                  letterSpacing: -6.5,
+                  shadows: [myShadow]
+                ),),
+              ),
+              Flexible(
+                child: Text('Flagging',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 70,
+                  letterSpacing: -3,
+                  shadows: [myShadow],
+                ),),
+              ),
               Container(
-                padding: EdgeInsets.all(30),
+                padding: EdgeInsets.all(10),
                 child: Column(
                   children: [
                     SocialLoginButton(buttonType: SocialLoginButtonType.google, onPressed: () {
@@ -60,18 +66,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     SocialLoginButton(buttonType: SocialLoginButtonType.github, onPressed: (){
                       signInWithGoogle();
                     }),
-                    SizedBox(height: 50,),
-                    Container(
-                      height: 300,
-                        width: 250,
-                        child: GestureDetector(child: Image.asset('images/imgs/trashCan.png',),
-                        onTap: (){
-                          Navigator.pushNamed(context, MainScreen.routename);
-                        },))
                   ],
                 ),
               ),
-
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Container(
+                  alignment: Alignment.topCenter,
+                    height: 300,
+                    width: 250,
+                    child: GestureDetector(
+                      child: Image.asset(
+                        'images/imgs/trashCan.png',
+                      ),
+                      onTap: () {
+                        Get.to(const MainScreen());
+                        Navigator.pushNamed(context, MainScreen.routename);
+                      },
+                    )),
+              )
             ],
           ),
         ],

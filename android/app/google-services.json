@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "407522503085-ggcjrv8kfflvlsnibv4asadcd3pp6218.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.seemaster.flaging",
+            "certificate_hash": "fc13ecd2a344c0d66532e979d6ea0cde7def2c2a"
+          }
+        },
+        {
           "client_id": "407522503085-qfoapuav9o586bcv8m503dr2bi5na743.apps.googleusercontent.com",
           "client_type": 3
         }

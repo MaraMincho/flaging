@@ -1,5 +1,11 @@
 import 'dart:async';
+import 'dart:ffi';
+import 'package:flaging/UserController.dart';
+import 'package:flaging/appvalue.dart';
+import 'package:flaging/screen/Profile.dart';
+import 'package:flaging/screen/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MainScreen extends StatefulWidget {
@@ -11,14 +17,16 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int currentPageIndex = 0;
-  Completer<GoogleMapController> _controller = Completer();
 
-  final name = '정다함'; //구글 이름 받아오기
+  int currentPageIndex = 0; // pageIndex
+  Completer<GoogleMapController> _controller = Completer();
+  final FindGetXController = Get.put(GetXController()); // controller 등록
+
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
+
   static final CameraPosition _kLake = CameraPosition(
       bearing: 192.8334901395799,
       target: LatLng(37.43296265331129, -122.08832357078792),
@@ -28,113 +36,17 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FindGetXController.SetUser();
+    final size = MediaQuery.of(context).size;
+    final LargeSizeFont = (size.width / 7);
+    final MediumSizeFont = (size.width / 15);
+    final SmallSizeFont = (size.width / 20);
     return Scaffold(
       appBar: AppBar(
-
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(40, 40, 40, 20),
-        child: ListView(
-          children: [
-            Column(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Hi \n$name님',
-                          style: TextStyle(
-                              fontSize: 50,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: -1,
-                          height: 1),
-                        ),
-                        SizedBox(width: 40,),
-                        GestureDetector(
-                          child: PhysicalModel(
-                            shape: BoxShape.circle,
-                            color: Colors.black,
-                            elevation: 5,
-
-                            child: Container(
-                              height: 120,
-                              width: 120,
-
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    'images/imgs/steelo.png'
-                                  )
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      '오늘도 힘차게 뛰어볼까요?',
-                      style: TextStyle(
-                        fontSize: 18,
-                        letterSpacing: -1.5
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 50,),
-                //1카드
-                Container(
-                  alignment: Alignment.topLeft,
-                  child: Text('열심히 걷는 당신 칭찬해~',
-                  style: TextStyle(
-                    fontSize: 30,
-                    letterSpacing: -1.5
-                  ),),
-                ),
-                PhysicalModel(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(15),
-                  elevation: 10,
-                  child: Container(
-                    width: double.infinity,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      image: DecorationImage(
-                        image: AssetImage('images/icons/img_3.png'),
-                      )
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30,),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.pushNamed(context, MainScreen.routename);
-                   },
-                  child: Container(
-                    alignment: Alignment.topLeft,
-                    child: Text('오늘도 힘차게 뛰어볼까요?',
-                      style: TextStyle(
-                          fontSize: 25,
-                          letterSpacing: -1.5
-                      ),),
-                  ),
-                ),
-                Container(
-                  height: 200,
-                  width: double.infinity,
-                  child: MapSample(),
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
+      body: <Widget> [
+       MainPage(),ChatHomeScreen()
+      ][currentPageIndex],
 
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -204,5 +116,73 @@ class MapSampleState extends State<MapSample> {
   Future<void> _goToTheLake() async {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_lAngels));
+  }
+}
+
+class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ProfileViewer(), // Profile만들기
+        Expanded(
+          child: ListView(
+            children: [
+              Column(
+                children: [
+                  SizedBox(height: 50,),
+                  //1카드
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Container(
+                      alignment: Alignment.topLeft,
+                      child: Text('열심히 걷는 당신 칭찬해~',
+                        style: TextStyle(
+                            fontSize: 34,
+                            letterSpacing: -3
+                        ),),
+                    ),
+                  ),
+
+                  Container(
+                    width: double.infinity,
+                    height: 150,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage('images/icons/img_3.png'),
+                        ),
+                        boxShadow: [
+                          myBoxShadow,
+                        ]
+                    ),
+                  ),
+                  SizedBox(height: 30,),
+
+
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text('오늘도 힘차게 뛰어볼까요?',
+                      style: TextStyle(
+                          fontSize: 25,
+                          letterSpacing: -1.5
+                      ),),
+                  ),
+
+                  Container(
+                    height: 200,
+                    width: double.infinity,
+                    child: MapSample(),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

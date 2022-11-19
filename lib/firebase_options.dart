@@ -63,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '407522503085',
     projectId: 'flagingdatabase',
     storageBucket: 'flagingdatabase.appspot.com',
+    androidClientId: '407522503085-ggcjrv8kfflvlsnibv4asadcd3pp6218.apps.googleusercontent.com',
     iosClientId: '407522503085-i8g5h1qijdgi3jrav07159d11nokamck.apps.googleusercontent.com',
     iosBundleId: 'com.seemaster.flaging',
   );
