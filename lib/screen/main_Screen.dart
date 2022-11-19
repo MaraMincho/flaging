@@ -1,14 +1,10 @@
 import 'dart:async';
-import 'dart:ffi';
-
-import 'package:auto_route/auto_route.dart';
-import 'package:flaging/route_generator.gr.dart';
-import 'package:flaging/screen/mypage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
+  static final routename = '/MainScreen';
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -117,7 +113,9 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 SizedBox(height: 30,),
                 GestureDetector(
-                  onTap: (){AutoRouter.of(context).push(BoardList());},
+                  onTap: (){
+                    Navigator.pushNamed(context, MainScreen.routename);
+                   },
                   child: Container(
                     alignment: Alignment.topLeft,
                     child: Text('오늘도 힘차게 뛰어볼까요?',

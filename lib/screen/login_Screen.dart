@@ -1,7 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flaging/appvalue.dart';
-import 'package:flaging/route_generator.gr.dart';
+import 'package:flaging/screen/main_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
@@ -67,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 250,
                         child: GestureDetector(child: Image.asset('images/imgs/trashCan.png',),
                         onTap: (){
-                          AutoRouter.of(context).push(MainScreen());
+                          Navigator.pushNamed(context, MainScreen.routename);
                         },))
                   ],
                 ),
