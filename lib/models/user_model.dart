@@ -1,71 +1,99 @@
-class User {
-  final int? id;
-  final String? name;
-  final String? imageUrl;
-  final bool? isOnline;
 
+class User {
   User({
-    this.id,
-    this.name,
-    this.imageUrl,
-    this.isOnline,
+    required this.id,
+    required this.name,
+    required this.imageUrl,
+    required this.isOnline,
   });
+  late final String id;
+  late final String name;
+  late final String imageUrl;
+  late final String isOnline;
+
+  User.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    name = json['name'];
+    imageUrl = json['imageUrl'];
+    isOnline = json['isOnline'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name'] = name;
+    _data['imageUrl'] = imageUrl;
+    _data['isOnline'] = isOnline;
+    return _data;
+  }
 }
 
-// YOU - current user
+List<User> UserList = [
+  currentUser,
+  ironMan,
+  captainAmerica,
+  hulk,
+  scarletWitch,
+  spiderMan,
+  blackWindow,
+  thor,
+  captainMarvel
+];
+
+
 final User currentUser = User(
-  id: 0,
+  id: '0',
   name: 'Nick Fury',
   imageUrl: 'assets/images/nick-fury.jpg',
-  isOnline: true,
+  isOnline: 'true',
 );
 
 // USERS
 final User ironMan = User(
-  id: 1,
+  id: '1',
   name: 'Iron Man',
-  imageUrl: 'assets/images/ironman.jpeg',
-  isOnline: true,
+  imageUrl: 'images/icons/steelo.png',
+  isOnline: 'true',
 );
 final User captainAmerica = User(
-  id: 2,
+  id: '2',
   name: 'Captain America',
-  imageUrl: 'assets/images/captain-america.jpg',
-  isOnline: true,
+  imageUrl: 'images/icons/steelo.png',
+  isOnline: 'true',
 );
 final User hulk = User(
-  id: 3,
+  id: '3',
   name: 'Hulk',
-  imageUrl: 'assets/images/hulk.jpg',
-  isOnline: false,
+  imageUrl: 'images/icons/steelo.png',
+  isOnline: 'false',
 );
 final User scarletWitch = User(
-  id: 4,
+  id: '4',
   name: 'Scarlet Witch',
-  imageUrl: 'assets/images/scarlet-witch.jpg',
-  isOnline: false,
+  imageUrl: 'images/icons/steelo.png',
+  isOnline: 'false',
 );
 final User spiderMan = User(
-  id: 5,
+  id: '5',
   name: 'Spider Man',
-  imageUrl: 'assets/images/spiderman.jpg',
-  isOnline: true,
+  imageUrl: 'images/icons/steelo.png',
+  isOnline: 'true',
 );
 final User blackWindow = User(
-  id: 6,
+  id: '6',
   name: 'Black Widow',
-  imageUrl: 'assets/images/black-widow.jpg',
-  isOnline: false,
+  imageUrl: 'images/icons/steelo.png',
+  isOnline: 'false',
 );
 final User thor = User(
-  id: 7,
+  id: '7',
   name: 'Thor',
-  imageUrl: 'assets/images/thor.png',
-  isOnline: false,
+  imageUrl: 'images/icons/steelo.png',
+  isOnline: 'false',
 );
 final User captainMarvel = User(
-  id: 8,
+  id: '8',
   name: 'Captain Marvel',
-  imageUrl: 'assets/images/captain-marvel.jpg',
-  isOnline: false,
+  imageUrl: 'images/icons/steelo.png',
+  isOnline: 'false',
 );

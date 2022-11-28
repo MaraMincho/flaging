@@ -1,5 +1,6 @@
+import 'package:flaging/screen/main_Screen.dart';
 import 'package:flutter/material.dart';
-import 'package:kakaomap_webview/kakaomap_webview.dart';
+
 
 class BoardList extends StatefulWidget {
   const BoardList({Key? key}) : super(key: key);
@@ -90,7 +91,7 @@ class _BoardListState extends State<BoardList> {
                           ],
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(30, 15, 20, 0),
+                          padding: EdgeInsets.fromLTRB(15, 15, 20, 0),
                           alignment: Alignment.topLeft,
                             child: Column(
                               children: [
@@ -109,7 +110,7 @@ class _BoardListState extends State<BoardList> {
                               ],
                             )),
                         Container(
-                          padding: EdgeInsets.fromLTRB(40, 10, 0, 0),
+                          padding: EdgeInsets.fromLTRB(15, 10, 0, 20),
                           alignment: Alignment.topLeft,
                           child: Opacity(
                             opacity: 0.4,
@@ -167,9 +168,9 @@ class _BoardListState extends State<BoardList> {
                           height: 10,
                         ),
                         Container(
-                          padding: EdgeInsets.all(50),
                           width: double.infinity - 30 ,
                           height: 200 ,
+                          child: MapSample(),
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.fill,

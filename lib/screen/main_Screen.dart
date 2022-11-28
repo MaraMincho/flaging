@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:ffi';
 import 'package:flaging/UserController.dart';
 import 'package:flaging/appvalue.dart';
-import 'package:flaging/screen/Profile.dart';
+import 'package:flaging/asset/Profile.dart';
+import 'package:flaging/screen/boardlist.dart';
 import 'package:flaging/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
       ),
       body: <Widget> [
-       MainPage(),ChatHomeScreen()
+       MainPage(),ChatHomeScreen(),MapSample(),
       ][currentPageIndex],
 
       bottomNavigationBar: NavigationBar(
@@ -99,7 +100,7 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: GoogleMap(
-        mapType: MapType.hybrid,
+        mapType: MapType.normal,
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
@@ -124,65 +125,73 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ProfileViewer(), // Profile만들기
-        Expanded(
-          child: ListView(
-            children: [
-              Column(
-                children: [
-                  SizedBox(height: 50,),
-                  //1카드
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Container(
-                      alignment: Alignment.topLeft,
-                      child: Text('열심히 걷는 당신 칭찬해~',
-                        style: TextStyle(
-                            fontSize: 34,
-                            letterSpacing: -3
-                        ),),
+    return Padding(
+      padding: EdgeInsets.all(23),
+      child: Column(
+        children: [
+          ProfileViewer(), // Profile만들기
+          Expanded(
+            child: ListView(
+              children: [
+                Column(
+                  children: [
+                    SizedBox(height: 50,),
+                    //1카드
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Container(
+                        alignment: Alignment.topLeft,
+                        child: Text('열심히 걷는 당신 칭찬해~',
+                          style: TextStyle(
+                              fontSize: 34,
+                              letterSpacing: -3
+                          ),),
+                      ),
                     ),
-                  ),
 
-                  Container(
-                    width: double.infinity,
-                    height: 150,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('images/icons/img_3.png'),
-                        ),
-                        boxShadow: [
-                          myBoxShadow,
-                        ]
+                    Container(
+                      width: double.infinity,
+                      height: 150,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('images/icons/img_3.png'),
+                          ),
+                          boxShadow: [
+                            myBoxShadow,
+                          ]
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 30,),
+                    SizedBox(height: 30,),
 
 
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Text('오늘도 힘차게 뛰어볼까요?',
-                      style: TextStyle(
-                          fontSize: 25,
-                          letterSpacing: -1.5
-                      ),),
-                  ),
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(BoardList());
+                      },
+                      child: Container(
+                        alignment: Alignment.topLeft,
+                        child: Text('오늘도 힘차게 뛰어볼까요?',
+                          style: TextStyle(
+                              fontSize: 25,
+                              letterSpacing: -1.5
+                          ),),
+                      ),
+                    ),
 
-                  Container(
-                    height: 200,
-                    width: double.infinity,
-                    child: MapSample(),
-                  )
-                ],
-              ),
-            ],
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      child: MapSample(),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

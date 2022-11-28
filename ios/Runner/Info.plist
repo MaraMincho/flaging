@@ -66,5 +66,13 @@
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>The app needs location permission</string>
 
+    <key>NSAppTransportSecurity</key>
+    <dict>
+    	<key>NSAllowsLocalNetworking</key>
+    	<true/>
+    	<key>NSAllowsArbitartyLoadsInWebContent</key>
+    	<true/>
+    </dict>
+
 </dict>
 </plist>
