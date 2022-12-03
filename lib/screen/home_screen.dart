@@ -63,9 +63,31 @@ class Sender {
 
 Future<dynamic> linking() async{
   DatabaseReference ref = FirebaseDatabase.instance.ref();
-  final snapshot = await ref.child('chats').get();
+  final snapshot = await ref.child('ChatList').get();
   var data = jsonEncode(snapshot.value);
+  //SetData();
+
   return data;
+}
+
+Future<void> SetData() async{
+  DatabaseReference ref2 = await FirebaseDatabase.instance.ref('/ChatList/0');
+  for(int i =0; i< messages.length; i++) {
+    ref2.update({
+      "${i}" : {
+        "sender" : {
+          "id" : "${messages[i].sender?.id}",
+          "imageUrl" : "${messages[i].sender?.imageUrl}",
+          "isOnline" : "${messages[i].sender?.isOnline}",
+          "name" : "${messages[i].sender?.name}"
+        },
+        "text" :"${messages[i].text}",
+        "time": "${messages[i].time}",
+        "unread": "${messages[i]}"
+      }
+    });
+  }
+
 }
 
 class ChatHomeScreen extends StatelessWidget {
@@ -81,26 +103,33 @@ class ChatHomeScreen extends StatelessWidget {
           return Text('에러');
         }
         else {
-
+          List<List<Chat>> ChatRoom = [];
           List<Chat> list= [];
-          print("스냅샷1");
           var temp = jsonDecode(snapshot.data);
-          print(temp[0].runtimeType);
-          for (Map<String, dynamic> i in temp) {
-            list.add(Chat.fromJson(i));
+          for (dynamic i in temp) {
+            for (var j in i) {
+              list.add(Chat.fromJson(j));
+            }
+            ChatRoom.add(list);
           }
-
           return Column(
             children: [
               ProfileViewer(),
               Expanded(
                 child: ListView.builder(
-                  itemCount: list.length,
+                  itemCount: ChatRoom.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final Chat chat = list[index]; //chat
+                    //final Chat chat = list[index]; //chat
                     return GestureDetector(
                       onTap: (){
-                        Get.to(ChatScreen());
+                        Get.to(ChatScreen(
+                          index: index, user: Sender(
+                          imageUrl: "images/icnos/steelo.png",
+                          name: "누구?",
+                          id: "1",
+                          isOnline: "true"
+                        ),
+                        ));
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(
@@ -111,35 +140,9 @@ class ChatHomeScreen extends StatelessWidget {
                           children: <Widget>[
                             Container( //읽었는지 안 읽었는지 확인해주는
                               padding: EdgeInsets.all(2),
-                              decoration: chat.unread.toString() == 'true'! // 읽었는지 안 읽었는지 확인해 줌
-                                  ? BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(40)),
-                                border: Border.all(
-                                  width: 2,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                // shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                  ),
-                                ],
-                              )
-                                  : BoxDecoration(
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                  ),
-                                ],
-                              ),
                               child: CircleAvatar(
                                 radius: 35,
-                                backgroundImage: AssetImage('${chat.sender?.imageUrl}'),
+                                backgroundImage: AssetImage('${ChatRoom[index].last.sender?.imageUrl}'),
                               ),
                             ),
                             Container(
@@ -155,29 +158,16 @@ class ChatHomeScreen extends StatelessWidget {
                                       Row(
                                         children: <Widget>[
                                           Text(
-                                            '${chat.sender?.name}',
+                                            '${ChatRoom[index].last.sender?.name}', //채팅방 이름
                                             style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          chat.unread.toString() == 'true'! // 읽었는지 안 읽었는지 확인해주는...
-                                              ? Container(
-                                            margin: const EdgeInsets.only(left: 5),
-                                            width: 7,
-                                            height: 7,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Theme.of(context).primaryColor,
-                                            ),
-                                          )
-                                              : Container(
-                                            child: null,
-                                          ),
                                         ],
                                       ),
                                       Text(
-                                        '${chat.time}',
+                                        '${ChatRoom[index].last.time}', // 시간대
                                         style: TextStyle(
                                           fontSize: 11,
                                           fontWeight: FontWeight.w300,
@@ -194,7 +184,7 @@ class ChatHomeScreen extends StatelessWidget {
                                   Container(
                                     alignment: Alignment.topLeft,
                                     child: Text( // 텍스트 표시
-                                      '${chat.text}',
+                                      '${ChatRoom[index].last.text}',
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: Colors.black54,

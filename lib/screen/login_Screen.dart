@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flaging/appvalue.dart';
+import 'package:flaging/controller/Me.dart';
 import 'package:flaging/screen/main_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
-
+  var controller = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,13 +28,18 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               SizedBox(height: 100,),
               Flexible(
-                child: Text('Move Eco and Echo',
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 40,
-                  letterSpacing: -6.5,
-                  shadows: [myShadow]
-                ),),
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamed(context, MainScreen.routename);
+                  },
+                  child: Text('Move Eco and Echo',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 40,
+                    letterSpacing: -6.5,
+                    shadows: [myShadow]
+                  ),),
+                ),
               ),
               Flexible(
                 child: Text('Flagging',
@@ -59,6 +65,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     }),
                     SizedBox(height: 10,),
                     GestureDetector(
+                      onTap: (){
+                        controller.change(id: '1', paraname: '누구세요', paraimageurl: 'images/icons/steelo.png');
+                        print(controller.user.value.name);
+                      },
                       child: Image.asset('images/icons/kakaotalk_login.png',
                       ),
                     ),
@@ -80,8 +90,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         'images/imgs/trashCan.png',
                       ),
                       onTap: () {
-                        Get.to(const MainScreen());
-                        Navigator.pushNamed(context, MainScreen.routename);
+                        controller.change(id: '0', paraname: '이세돌', paraimageurl: 'images/icons/steelo.png');
+                        print(controller.user.value.name);
+                        //Navigator.pushNamed(context, MainScreen.routename);
                       },
                     )),
               )

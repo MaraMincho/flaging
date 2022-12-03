@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -17,8 +18,6 @@ class TestScreen extends StatefulWidget {
 class _TestScreenState extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -26,22 +25,24 @@ class _TestScreenState extends State<TestScreen> {
           children: [
             GestureDetector(
               onTap: () async{
-                Future<String> getjson() async {
-                  String url = "https://jsonplaceholder.typicode.com/comments";
-                  http.Response response = await http.get(Uri.parse(url));
-                  return response.body;
-                };
-                var temp = await getjson();
-                List<model> list = [];
-                var jsonvalue = jsonDecode(temp);
-                for (var i in jsonvalue) {
-                  list.add(model.fromjson(i));
+                DatabaseReference ref = await FirebaseDatabase.instance.ref('/chats');
+
+                for(int i =0; i< messages.length; i++) {
+                  ref.update({
+                    "${i}" : {
+                      "sender" : {
+                        "id" : "${messages[i].sender?.id}",
+                        "imageUrl" : "${messages[i].sender?.imageUrl}",
+                        "isOnline" : "${messages[i].sender?.isOnline}",
+                        "name" : "${messages[i].sender?.name}"
+                      },
+                      "text" :"${messages[i].text}",
+                      "time": "${messages[i].time}",
+                      "unread": "${messages[i]}"
+                    }
+                  });
                 }
-                // for (var i in temp) {
-                //   print(i['id']);
-                //   list.add(model.fromjson(i));
-                // }
-                print(list.length);
+
               },
               child: Text('불러와라'),
             ),

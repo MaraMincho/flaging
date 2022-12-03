@@ -29,7 +29,7 @@ chatBubble(Chat message, bool isMe, bool isSameUser, BuildContext context) {
               ],
             ),
             child: Text(
-              '${message.text} +3',
+              '${message.text}',
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -96,7 +96,7 @@ chatBubble(Chat message, bool isMe, bool isSameUser, BuildContext context) {
               ],
             ),
             child: Text(
-              '${message.text} +44',  // 메시지 입력
+              '${message.text}',  // 메시지 입력
               style: TextStyle(
                 color: Colors.black54,
               ),

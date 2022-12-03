@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:ffi';
-import 'package:flaging/UserController.dart';
 import 'package:flaging/appvalue.dart';
 import 'package:flaging/asset/Profile.dart';
+import 'package:flaging/controller/Me.dart';
 import 'package:flaging/screen/boardlist.dart';
 import 'package:flaging/screen/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
 
   int currentPageIndex = 0; // pageIndex
   Completer<GoogleMapController> _controller = Completer();
-  final FindGetXController = Get.put(GetXController()); // controller 등록
+  //final FindGetXController = Get.put(UserController()); // controller 등록
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -37,7 +37,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    FindGetXController.SetUser();
     final size = MediaQuery.of(context).size;
     final LargeSizeFont = (size.width / 7);
     final MediumSizeFont = (size.width / 15);
@@ -62,8 +61,6 @@ class _MainScreenState extends State<MainScreen> {
           NavigationDestination(icon: Icon(Icons.directions_run), label: ''),
           NavigationDestination(icon: Icon(Icons.settings), label: '')
         ],
-
-
       ),
     );
   }
