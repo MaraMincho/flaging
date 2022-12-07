@@ -126,7 +126,7 @@ chatBubble(Chat message, bool isMe, bool isSameUser, BuildContext context) {
               width: 10,
             ),
             Text(
-              '${message.time} +23',
+              '${message.time}',
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.black45,

@@ -5,6 +5,7 @@ import 'package:flaging/asset/Profile.dart';
 import 'package:flaging/controller/Me.dart';
 import 'package:flaging/screen/boardlist.dart';
 import 'package:flaging/screen/home_screen.dart';
+import 'package:flaging/screen/running.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -45,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
       ),
       body: <Widget> [
-       MainPage(),ChatHomeScreen(),MapSample(),
+       MainPage(),ChatHomeScreen(),WalkPage(),
       ][currentPageIndex],
 
       bottomNavigationBar: NavigationBar(

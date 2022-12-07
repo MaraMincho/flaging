@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flaging/asset/ChatBubble.dart';
+import 'package:flaging/controller/Me.dart';
 import 'package:flutter/material.dart';
 import 'package:flaging/models/message_model.dart';
-import 'package:flaging/models/user_model.dart';
+import 'package:flutter/rendering.dart';
+import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'home_screen.dart';
 class ChatScreen extends StatefulWidget {
@@ -18,6 +21,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  var controller = Get.put(UserController());
   _sendMessageArea(int index) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8),
@@ -44,17 +48,22 @@ class _ChatScreenState extends State<ChatScreen> {
             iconSize: 25,
             color: Theme.of(context).primaryColor,
             onPressed: () async{
+              final DateTime now = DateTime.now();
+              final DateFormat formatter = DateFormat('jm');
+              final String formatted = formatter.format(now);
+              print(formatted); // something like 2013-04-20
+
               DatabaseReference ref = await FirebaseDatabase.instance.ref('/ChatList/${widget.index}');
               ref.update({
                 "${index}" : {
                   "sender" : {
-                    "id" : "${messages[0].sender?.id}",
-                    "imageUrl" : "${messages[0].sender?.imageUrl}",
+                    "id" : "${controller.user.value.id}",
+                    "imageUrl" : "${controller.user.value.imageUrl}",
                     "isOnline" : "${messages[0].sender?.isOnline}",
-                    "name" : "${messages[0].sender?.name}"
+                    "name" : "${controller.user.value.name}"
                   },
                   "text" :"${widget.SendMessage.text}",
-                  "time": "${messages[0].time}",
+                  "time": "${formatted}",
                   "unread": "${messages[0].unread}"
                 }
               }
@@ -104,16 +113,22 @@ class _ChatScreenState extends State<ChatScreen> {
             }
             int ChatIndex = ChatList.length;
 
+
+
             return Column(
               children: <Widget>[
                 Expanded(
                   child: ListView.builder(
+                    controller: ScrollController(
+                      initialScrollOffset: context.height,
+                    ),
+                    shrinkWrap: true,
                     padding: EdgeInsets.all(20),
                     itemCount: ChatList.length,
                     itemBuilder: (context, int index) {
                       Chat CurrentChat = ChatList[index];
                       //final Message message = messages[index];
-                      final bool isMe = CurrentChat.sender?.id == ChatList[0].sender?.id;
+                      final bool isMe = CurrentChat.sender?.id == controller.user.value.id;
                       final bool isSameUser = prevUserId == CurrentChat.sender?.id;
                       prevUserId = CurrentChat.sender?.id;
                       return chatBubble(CurrentChat, isMe, isSameUser, context);

@@ -65,6 +65,7 @@ Future<dynamic> linking() async{
   DatabaseReference ref = FirebaseDatabase.instance.ref();
   final snapshot = await ref.child('ChatList').get();
   var data = jsonEncode(snapshot.value);
+  print(data);
   //SetData();
 
   return data;
@@ -122,7 +123,7 @@ class ChatHomeScreen extends StatelessWidget {
                     //final Chat chat = list[index]; //chat
                     return GestureDetector(
                       onTap: (){
-                        Get.to(ChatScreen(
+                        Get.to(()=>ChatScreen(
                           index: index, user: Sender(
                           imageUrl: "images/icnos/steelo.png",
                           name: "누구?",
